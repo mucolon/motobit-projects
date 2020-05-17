@@ -46,18 +46,33 @@ class MotoBit:
             pwr = self.map(speed, 0, 100, 127, 0)
             pwr = round(pwr)
         i2c.write(89, bytes(motor + pwr))
-        return pwr
+        # return pwr
 
     def enable(self, motor_power):
         i2c.write(89, bytes(motor_power))
 
     def invert(self, motor, invert):
-
+        temp_num = 1 if invert else 0
+        if motor == self.right:
+            i2c.write(89, bytes(4608 + temp_num))
+        else:
+            i2c.write(89, bytes(4864 + temp_num))
 
 
 if __name__ == "__main__":
-    while True:
-        display.scroll('Hello, World!')
-        display.show(Image.HEART_SMALL)
-        print("Loop Completed")
-        sleep(1000)
+
+    moto = MotoBit()
+    moto.invert(moto.left, True)
+    moto.invert(moto.right, False)
+    moto.enable(moto.on)
+    moto.setMotorSpeed(moto.left, moto.forward, 25)
+    moto.setMotorSpeed(moto.right, moto.backward, 25)
+    sleep(1000 * 15)
+    moto.enable(moto.off)
+
+    # while True:
+        # display.scroll('Hello, World!')
+        # display.show(Image.HEART_SMALL)
+        # print("Loop Completed")
+        # sleep(1000)
+
