@@ -1,4 +1,4 @@
-from microbit import i2c, pin0, pin1, pin2, sleep
+from microbit import display, Image, i2c, pin0, pin1, pin2, sleep
 
 
 class MotoBit():
@@ -73,3 +73,45 @@ class MotoBit():
         '''Returns True if right sensor is above a black line.
         '''
         return pin2.read_analog() >= self.threshold
+
+
+speed = 20
+speed_diff = 10
+mod = 1
+gain = 0.5
+moto = MotoBit(invert_right=True, delay=500, black_threshold=850)
+moto.enable()
+while True:
+    sensor_left = moto.ir_left()
+    sensor_center = moto.ir_center()
+    sensor_right = moto.ir_right()
+    if (sensor_left & sensor_center & sensor_right):
+        moto.drive(speed, speed)                         # straight
+        display.show(Image.ARROW_N, clear=True)
+        mod = 1
+    elif ((not sensor_left) & sensor_center & sensor_right):
+        moto.drive(speed + speed_diff, speed)            # turn right
+        display.show(Image.ARROW_NE, clear=True)
+        mod = 1
+    elif (sensor_left & sensor_center & (not sensor_right)):
+        moto.drive(speed, speed + speed_diff)            # turn left
+        display.show(Image.ARROW_NW, clear=True)
+        mod = 1
+    elif ((not sensor_left) & (not sensor_center) & sensor_right):
+        moto.drive(-speed, -speed)                       # reverse
+        display.show(Image.ARROW_S, clear=True)
+        sleep(10)
+        moto.drive(speed + (speed_diff * mod), speed)    # turn right
+        display.show(Image.ARROW_NE, clear=True)
+        mod += gain
+    elif (sensor_left & (not sensor_center) & (not sensor_right)):
+        moto.drive(-speed, -speed)                       # reverse
+        display.show(Image.ARROW_S, clear=True)
+        sleep(10)
+        moto.drive(speed, speed + (speed_diff * mod))    # turn left
+        display.show(Image.ARROW_NW, clear=True)
+        mod += gain
+    else:
+        moto.drive(-speed, -speed)                       # reverse
+        display.show(Image.ARROW_S, clear=True)
+        mod = 1
