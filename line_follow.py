@@ -6,8 +6,7 @@ class MotoBit():
     Args:
         invert_left (bool): Invert left motor polarity. (default: False)
         invert_right (bool): Invert right motor polarity. (default: False)
-        delay (int): Time the motors will run in milliseconds. [1, infinity) (default: 500)
-        black_threshold (int): Threshold value for detecting a black line. Run ir_read.py to read values on REPL.
+        line_threshold (int): Threshold value for detecting a dark line. Run ir_read.py to read values on REPL.
             [0, 1023] (default: 850)
     '''
     I2C_ADDR = 0x59         # 89
@@ -18,10 +17,9 @@ class MotoBit():
     DUTY_POS_CTE = 0x80     # 128
     DUTY_MAX = 0xff         # 255
 
-    def __init__(self, invert_left=False, invert_right=False, delay=500, black_threshold=850):
+    def __init__(self, invert_left=False, invert_right=False, line_threshold=850):
         self.INVERT = (invert_left, invert_right)
-        self.delay = delay
-        self.threshold = black_threshold
+        self.threshold = line_threshold
 
     def enable(self):
         '''Enable motor driver.
@@ -34,7 +32,7 @@ class MotoBit():
         i2c.write(self.I2C_ADDR, bytes([self.CMD_ENABLE, 0x00]))
 
     def drive(self, speed_left, speed_right):
-        '''Drive motors based on 100 point scale.
+        '''Drive motors continuously based on 100 point scale.
         Args:
             speed_left (int|float): Motor power value. [-100, 100]
             speed_right (int|float): Motor power value. [-100, 100]
@@ -53,11 +51,17 @@ class MotoBit():
                 speeds[i] = round(speeds[i] * 127 / 100) + self.DUTY_POS_CTE
         i2c.write(self.I2C_ADDR, bytes([self.CMD_SPEED_LEFT, speeds[0]]))
         i2c.write(self.I2C_ADDR, bytes([self.CMD_SPEED_RIGHT, speeds[1]]))
-        sleep(self.delay)
-        i2c.write(self.I2C_ADDR, bytes(
-            [self.CMD_SPEED_LEFT, self.DUTY_POS_CTE]))
-        i2c.write(self.I2C_ADDR, bytes(
-            [self.CMD_SPEED_RIGHT, self.DUTY_POS_CTE]))
+
+    def drive_stop(self, speed_left, speed_right, duration):
+        '''Drive motors for time duration based on 100 point scale.
+        Args:
+            speed_left (int|float): Motor power value. [-100, 100]
+            speed_right (int|float): Motor power value. [-100, 100]
+            duration (int): Time the motors will run in milliseconds. [1, infinity)
+        '''
+        self.drive(speed_left, speed_right)
+        sleep(duration)
+        self.drive(0, 0)
 
     def ir_left(self):
         '''Returns True if left sensor is above a black line.
@@ -79,39 +83,48 @@ speed = 20
 speed_diff = 10
 mod = 1
 gain = 0.5
-moto = MotoBit(invert_right=True, delay=500, black_threshold=850)
+time = 500
+moto = MotoBit(invert_right=True, line_threshold=850)
 moto.enable()
 while True:
     sensor_left = moto.ir_left()
     sensor_center = moto.ir_center()
     sensor_right = moto.ir_right()
     if (sensor_left & sensor_center & sensor_right):
-        moto.drive(speed, speed)                         # straight
         display.show(Image.ARROW_N, clear=True)
+        # straight
+        moto.drive_stop(speed, speed, time)
         mod = 1
     elif ((not sensor_left) & sensor_center & sensor_right):
-        moto.drive(speed + speed_diff, speed)            # turn right
         display.show(Image.ARROW_NE, clear=True)
+        # turn right
+        moto.drive_stop(speed + speed_diff, speed, time)
         mod = 1
     elif (sensor_left & sensor_center & (not sensor_right)):
-        moto.drive(speed, speed + speed_diff)            # turn left
         display.show(Image.ARROW_NW, clear=True)
+        # turn left
+        moto.drive_stop(speed, speed + speed_diff, time)
         mod = 1
     elif ((not sensor_left) & (not sensor_center) & sensor_right):
-        moto.drive(-speed, -speed)                       # reverse
         display.show(Image.ARROW_S, clear=True)
+        # reverse
+        moto.drive_stop(-speed, -speed, time)
         sleep(10)
-        moto.drive(speed + (speed_diff * mod), speed)    # turn right
         display.show(Image.ARROW_NE, clear=True)
+        # turn right
+        moto.drive_stop(speed + (speed_diff * mod), speed, time)
         mod += gain
     elif (sensor_left & (not sensor_center) & (not sensor_right)):
-        moto.drive(-speed, -speed)                       # reverse
         display.show(Image.ARROW_S, clear=True)
+        # reverse
+        moto.drive_stop(-speed, -speed, time)
         sleep(10)
-        moto.drive(speed, speed + (speed_diff * mod))    # turn left
         display.show(Image.ARROW_NW, clear=True)
+        # turn left
+        moto.drive_stop(speed, speed + (speed_diff * mod), time)
         mod += gain
     else:
-        moto.drive(-speed, -speed)                       # reverse
         display.show(Image.ARROW_S, clear=True)
+        # reverse
+        moto.drive_stop(-speed, -speed, time)
         mod = 1
