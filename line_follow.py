@@ -41,11 +41,11 @@ class MotoBit():
         for i in range(2):
             if self.INVERT[i]:
                 speeds[i] = -speeds[i]
-            if speeds[i] < 0:
+            if speeds[i] <= 0:
                 if speeds[i] < -100:
                     speeds[i] = -100
                 speeds[i] = round(speeds[i] * 127 / 100) + self.DUTY_NEG_CTE
-            elif speeds[i] >= 0:
+            elif speeds[i] > 0:
                 if speeds[i] > 100:
                     speeds[i] = 100
                 speeds[i] = round(speeds[i] * 127 / 100) + self.DUTY_POS_CTE
@@ -91,40 +91,32 @@ while True:
     sensor_center = moto.ir_center()
     sensor_right = moto.ir_right()
     if (sensor_left & sensor_center & sensor_right):
-        display.show(Image.ARROW_N, clear=True)
-        # straight
+        display.show(Image.ARROW_N, clear=True)                 # straight
         moto.drive_stop(speed, speed, time)
         mod = 1
     elif ((not sensor_left) & sensor_center & sensor_right):
-        display.show(Image.ARROW_NE, clear=True)
-        # turn right
+        display.show(Image.ARROW_NE, clear=True)                # turn right
         moto.drive_stop(speed + speed_diff, speed, time)
         mod = 1
     elif (sensor_left & sensor_center & (not sensor_right)):
-        display.show(Image.ARROW_NW, clear=True)
-        # turn left
+        display.show(Image.ARROW_NW, clear=True)                # turn left
         moto.drive_stop(speed, speed + speed_diff, time)
         mod = 1
     elif ((not sensor_left) & (not sensor_center) & sensor_right):
-        display.show(Image.ARROW_S, clear=True)
-        # reverse
+        display.show(Image.ARROW_S, clear=True)                 # reverse
         moto.drive_stop(-speed, -speed, time)
         sleep(10)
-        display.show(Image.ARROW_NE, clear=True)
-        # turn right
+        display.show(Image.ARROW_NE, clear=True)                # turn right
         moto.drive_stop(speed + (speed_diff * mod), speed, time)
         mod += gain
     elif (sensor_left & (not sensor_center) & (not sensor_right)):
-        display.show(Image.ARROW_S, clear=True)
-        # reverse
+        display.show(Image.ARROW_S, clear=True)                 # reverse
         moto.drive_stop(-speed, -speed, time)
         sleep(10)
-        display.show(Image.ARROW_NW, clear=True)
-        # turn left
+        display.show(Image.ARROW_NW, clear=True)                # turn left
         moto.drive_stop(speed, speed + (speed_diff * mod), time)
         mod += gain
     else:
-        display.show(Image.ARROW_S, clear=True)
-        # reverse
+        display.show(Image.ARROW_S, clear=True)                 # reverse
         moto.drive_stop(-speed, -speed, time)
         mod = 1
