@@ -64,17 +64,17 @@ class MotoBit():
         self.drive(0, 0)
 
     def ir_left(self):
-        '''Returns True if left sensor is above a black line.
+        '''Returns True if left sensor is above a dark line.
         '''
         return pin0.read_analog() >= self.threshold
 
     def ir_center(self):
-        '''Returns True if center sensor is above a black line.
+        '''Returns True if center sensor is above a dark line.
         '''
         return pin1.read_analog() >= self.threshold
 
     def ir_right(self):
-        '''Returns True if right sensor is above a black line.
+        '''Returns True if right sensor is above a dark line.
         '''
         return pin2.read_analog() >= self.threshold
 
@@ -83,40 +83,40 @@ speed = 20
 speed_diff = 10
 mod = 1
 gain = 0.5
-time = 500
-moto = MotoBit(invert_right=True, line_threshold=850)
+time = 450
+moto = MotoBit(invert_right=True)
 moto.enable()
 while True:
     sensor_left = moto.ir_left()
     sensor_center = moto.ir_center()
     sensor_right = moto.ir_right()
     if (sensor_left & sensor_center & sensor_right):
-        display.show(Image.ARROW_N, clear=True)                 # straight
-        moto.drive_stop(speed, speed, time)
+        display.show(Image.ARROW_N)
+        moto.drive_stop(speed, speed, time)                       # straight
         mod = 1
     elif ((not sensor_left) & sensor_center & sensor_right):
-        display.show(Image.ARROW_NE, clear=True)                # turn right
-        moto.drive_stop(speed + speed_diff, speed, time)
+        display.show(Image.ARROW_NE)
+        moto.drive_stop(speed + speed_diff, speed, time)          # turn right
         mod = 1
     elif (sensor_left & sensor_center & (not sensor_right)):
-        display.show(Image.ARROW_NW, clear=True)                # turn left
-        moto.drive_stop(speed, speed + speed_diff, time)
+        display.show(Image.ARROW_NW)
+        moto.drive_stop(speed, speed + speed_diff, time)          # turn left
         mod = 1
     elif ((not sensor_left) & (not sensor_center) & sensor_right):
-        display.show(Image.ARROW_S, clear=True)                 # reverse
-        moto.drive_stop(-speed, -speed, time)
+        display.show(Image.ARROW_S)
+        moto.drive_stop(-speed, -speed, time)                     # reverse
         sleep(10)
-        display.show(Image.ARROW_NE, clear=True)                # turn right
-        moto.drive_stop(speed + (speed_diff * mod), speed, time)
+        display.show(Image.ARROW_NE)
+        moto.drive_stop(speed + (speed_diff * mod), speed, time)  # turn right
         mod += gain
     elif (sensor_left & (not sensor_center) & (not sensor_right)):
-        display.show(Image.ARROW_S, clear=True)                 # reverse
-        moto.drive_stop(-speed, -speed, time)
+        display.show(Image.ARROW_S)
+        moto.drive_stop(-speed, -speed, time)                     # reverse
         sleep(10)
-        display.show(Image.ARROW_NW, clear=True)                # turn left
-        moto.drive_stop(speed, speed + (speed_diff * mod), time)
+        display.show(Image.ARROW_NW)
+        moto.drive_stop(speed, speed + (speed_diff * mod), time)  # turn left
         mod += gain
     else:
-        display.show(Image.ARROW_S, clear=True)                 # reverse
-        moto.drive_stop(-speed, -speed, time)
+        display.show(Image.ARROW_S)
+        moto.drive_stop(-speed, -speed, time)                     # reverse
         mod = 1
