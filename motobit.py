@@ -64,16 +64,16 @@ class MotoBit():
         self.drive(0, 0)
 
     def ir_left(self):
-        '''Returns True if left sensor is above a black line.
+        '''Returns True if left sensor is above a dark line.
         '''
         return pin0.read_analog() >= self.threshold
 
     def ir_center(self):
-        '''Returns True if center sensor is above a black line.
+        '''Returns True if center sensor is above a dark line.
         '''
         return pin1.read_analog() >= self.threshold
 
     def ir_right(self):
-        '''Returns True if right sensor is above a black line.
+        '''Returns True if right sensor is above a dark line.
         '''
         return pin2.read_analog() >= self.threshold
