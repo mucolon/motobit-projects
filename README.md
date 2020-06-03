@@ -12,8 +12,8 @@ A script that commands the SparkFun micro:bot to follow a 2 inch wide black line
 
 ### micro:bot
 
-![alt text](https://github.com/mucolon/motobit-robot/blob/master/media/micro-bot.jpg "micro:bot")
+![micro:bot](https://github.com/mucolon/motobit-robot/blob/master/media/micro-bot.jpg "micro:bot")
 
 ### moto:bit
 
-![alt text](https://github.com/mucolon/motobit-robot/blob/master/media/moto-bit.jpg "moto:bit")
+![moto:bit](https://github.com/mucolon/motobit-robot/blob/master/media/moto-bit.jpg "moto:bit")
