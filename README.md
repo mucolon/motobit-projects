@@ -1,4 +1,4 @@
-# motobit-robot
+# motobit-projects
 
 A repository for projects using SparkFun's [moto:bit](https://www.sparkfun.com/products/15713).
 
