@@ -10,10 +10,6 @@ This file contains the motobit class used in the scripts below.
 
 A script that commands the SparkFun [micro:bot](https://www.sparkfun.com/products/16275) to follow a 2 inch wide black line.
 
-### test
-
-A folder/directory containing code meant to calibrate the [micro:bot](https://www.sparkfun.com/products/16275).
-
 ------------------------------------
 
 ### micro:bot
