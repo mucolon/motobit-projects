@@ -4,11 +4,11 @@ A repository for projects using SparkFun's moto:bit.
 
 ### micro:bot
 
-![alt text]:(https://raw.githubusercontent.com/mucolon/motobit-robot/master/media/micro-bot.jpg)
+![alt text]:(https://github.com/mucolon/motobit-robot/blob/master/media/micro-bot.jpg)
 
 ### moto:bit
 
-![alt text]:(https://raw.githubusercontent.com/mucolon/motobit-robot/master/media/moto-bit.jpg)
+![alt text]:(https://github.com/mucolon/motobit-robot/blob/master/media/moto-bit.jpg)
 
 ## motobit.py
 
