@@ -2,15 +2,15 @@
 
 A repository for projects using SparkFun's [moto:bit](https://www.sparkfun.com/products/15713).
 
-## motobit.py
+### motobit.py
 
 This file contains the motobit class used in the scripts below.
 
-## line_follow.py
+### line_follow.py
 
 A script that commands the SparkFun [micro:bot](https://www.sparkfun.com/products/16275) to follow a 2 inch wide black line.
 
-## test
+### test
 
 A folder/directory containing code meant to calibrate the [micro:bot](https://www.sparkfun.com/products/16275).
 
