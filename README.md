@@ -2,6 +2,10 @@
 
 A repository for projects using SparkFun's [moto:bit](https://www.sparkfun.com/products/15713).
 
+### microbit
+
+Enable intellisense on Visual Studio Code by cloning this repository https://github.com/PhonicCanine/microbit
+
 ### motobit.py
 
 This file contains the motobit class used in the scripts below.
