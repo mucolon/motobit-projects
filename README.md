@@ -14,7 +14,7 @@ This directory (folder) contains a line following script and the imported class 
 
 ### microbit
 
-Enable intellisense on Visual Studio Code by cloning this repository https://github.com/PhonicCanine/microbit
+This directory enables intellisense on Visual Studio Code. Code was sourced from this repository https://github.com/PhonicCanine/microbit
 
 ## Flashing
 
