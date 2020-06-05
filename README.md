@@ -33,9 +33,11 @@ I recommend ordering the [micro:bit Go Bundle](https://www.sparkfun.com/products
 ### micro:bot
 
 ![micro:bot](media/micro-bot.jpg)
+
 _micro:bit not included with the micro:bot kit._
 
 ### moto:bit
 
 ![moto:bit](media/moto-bit.jpg)
+
 _moto:bit included with the micro:bot kit._
