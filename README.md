@@ -6,7 +6,7 @@ A repository for projects using SparkFun's [moto:bit](https://www.sparkfun.com/p
 
 A script that commands the SparkFun [micro:bot](https://www.sparkfun.com/products/16275) to follow a 2 inch wide black line. This file includes the MotoBit class. Thus only this file needs to be flashed to have a functioning line following robot.
 
-![Line Following Robot](media/line-follower.gif)
+<img src="media/line-follower.gif">
 
 ### line-follower
 
@@ -30,16 +30,16 @@ I recommend ordering the [micro:bit Go Bundle](https://www.sparkfun.com/products
 
 ### micro:bit
 
-![micro:bit](media/micro-bit.jpg)
+<img src="media/micro-bit.jpg">
 
 ### micro:bot
 
-![micro:bot](media/micro-bot.jpg)
+<img src="media/micro-bot.jpg">
 
 _micro:bit not included with the micro:bot kit._
 
 ### moto:bit
 
-![moto:bit](media/moto-bit.jpg)
+![moto:bit](media/moto-bit.jpg
 
 _moto:bit included with the micro:bot kit._
