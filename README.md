@@ -28,18 +28,7 @@ There are two other editors other than VS Code that can flash your python script
 
 I recommend ordering the [micro:bit Go Bundle](https://www.sparkfun.com/products/14336) and [micro:bot kit](https://www.sparkfun.com/products/16275) together to avoid S&H costs, if you're only buying one robot set. For multiple sets of robots, purchase the [micro:bit board](https://www.sparkfun.com/products/14208) and [micro:bot kit](https://www.sparkfun.com/products/16275) instead for every robot set.
 
-### micro:bit
-
-<img src="media/micro-bit.jpg">
-
-### micro:bot
-
-<img src="media/micro-bot.jpg">
-
-_micro:bit not included with the micro:bot kit._
-
-### moto:bit
-
-![moto:bit](media/moto-bit.jpg
-
-_moto:bit included with the micro:bot kit._
+| micro:bit | micro:bot | moto:bit |
+| :-: | :-: | :-: |
+| <img src="https://cdn.sparkfun.com//assets/parts/1/2/1/4/8/13988-01.jpg" alt="micro:bit" style="zoom: 30%;"> | <img src="https://cdn.sparkfun.com//assets/parts/1/4/9/5/6/SparkFun_micro-bot_kit_-_v2.0-02.jpg" alt="micro:bot" style="zoom: 30%;"> | <img src="https://cdn.sparkfun.com//assets/parts/1/4/2/9/6/15713-SparkFun_moto-bit_-_micro-bit_Carrier_Board__Qwiic_-01a.jpg" alt="moto:bit" style="zoom: 30%;"> |
+| | *micro:bit not included with the micro:bot kit.* | *moto:bit included with the micro:bot kit.* |
