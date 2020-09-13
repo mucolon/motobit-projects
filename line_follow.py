@@ -16,9 +16,6 @@ class MotoBit():
     CMD_ENABLE = 0x70       # 112
     CMD_SPEED_LEFT = 0x21   # 33
     CMD_SPEED_RIGHT = 0x20  # 32
-    DUTY_NEG_CTE = 0x7f     # 127
-    DUTY_POS_CTE = 0x80     # 128
-    DUTY_MAX = 0xff         # 255
 
     def __init__(self, invert_left=False, invert_right=False, line_threshold=850):
         self.INVERT = (invert_left, invert_right)
@@ -44,14 +41,11 @@ class MotoBit():
         for i in range(2):
             if self.INVERT[i]:
                 speeds[i] = -speeds[i]
-            if speeds[i] <= 0:
-                if speeds[i] < -100:
-                    speeds[i] = -100
-                speeds[i] = round(speeds[i] * 127 / 100) + self.DUTY_NEG_CTE
-            elif speeds[i] > 0:
-                if speeds[i] > 100:
-                    speeds[i] = 100
-                speeds[i] = round(speeds[i] * 127 / 100) + self.DUTY_POS_CTE
+            speeds[i] = round(speeds[i] * 1.275 + 127.5)
+            if speeds[i] < 0:
+                speeds[i] = 0
+            elif speeds[i] > 255:
+                speeds[i] = 255
         i2c.write(self.I2C_ADDR, bytes([self.CMD_SPEED_LEFT, speeds[0]]))
         i2c.write(self.I2C_ADDR, bytes([self.CMD_SPEED_RIGHT, speeds[1]]))
 
