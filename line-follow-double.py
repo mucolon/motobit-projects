@@ -9,7 +9,7 @@ class MotoBit():
     Args:
         invert_left (bool): Invert left motor polarity. (default: False)
         invert_right (bool): Invert right motor polarity. (default: False)
-        line_threshold (int): Threshold value for detecting a dark line. Run ir_read.py to read values on REPL.
+        line_threshold (int): Threshold value for detecting a black line. Run ir_read.py to read values on REPL.
             [0, 1023] (default: 850)
     '''
     I2C_ADDR = 0x59         # 89
@@ -60,23 +60,20 @@ class MotoBit():
         sleep(duration)
         self.drive(0, 0)
 
-    def ir_left(self):
-        '''Returns True if left sensor is above a dark line.
+    def sensors(self):
+        '''Returns a tuple with 3 booleans for the state of the 3 analog infrared sensors over a black line.
+        Returns:
+            left (bool): True if left sensor is above a black line.
+            center (bool): True if center sensor is above a black line.
+            right (bool): True if right sensor is above a black line.
         '''
-        return pin0.read_analog() >= self.threshold
-
-    def ir_center(self):
-        '''Returns True if center sensor is above a dark line.
-        '''
-        return pin1.read_analog() >= self.threshold
-
-    def ir_right(self):
-        '''Returns True if right sensor is above a dark line.
-        '''
-        return pin2.read_analog() >= self.threshold
+        left = pin0.read_analog() >= self.threshold
+        center = pin1.read_analog() >= self.threshold
+        right = pin2.read_analog() >= self.threshold
+        return (left, center, right)
 
 
-speed = 20
+speed = 25
 speed_diff = 10
 mod = 1
 gain = 0.5
@@ -85,12 +82,12 @@ moto = MotoBit(invert_right=True)
 moto.enable()
 while True:
     # reading analog values
-    sensor_left = moto.ir_left()
-    sensor_center = moto.ir_center()
-    sensor_right = moto.ir_right()
+    sensor_left = moto.sensors()[0]
+    sensor_center = moto.sensors()[1]
+    sensor_right = moto.sensors()[2]
     # all sensors over black line
     # straight
-    if (sensor_left & sensor_center & sensor_right):
+    if ((not sensor_left) & sensor_center & (not sensor_right)):
         display.show(Image.ARROW_N)
         moto.drive_stop(speed, speed, time)
         mod = 1

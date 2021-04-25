@@ -13,9 +13,9 @@ moto = MotoBit(invert_right=True)
 moto.enable()
 while True:
     # reading analog values
-    sensor_left = moto.ir_left()
-    sensor_center = moto.ir_center()
-    sensor_right = moto.ir_right()
+    sensor_left = moto.sensors()[0]
+    sensor_center = moto.sensors()[1]
+    sensor_right = moto.sensors()[2]
     # all sensors over black line
     # straight
     if (sensor_left & sensor_center & sensor_right):
